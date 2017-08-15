@@ -57,12 +57,14 @@ export default {
     getAllArticle () {
       this.$http.get('/article')
       .then(res => {
+        console.log(res)
         this.data = res.data
       })
       .catch(err => console.log(err))
     }
   },
   created () {
+    this.getAllArticle()
     this.cekLogin()
   }
 }
