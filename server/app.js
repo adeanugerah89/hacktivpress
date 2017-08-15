@@ -13,6 +13,8 @@ const express = require('express'),
       //All Route Files
       routes = require('./routes/index'),
       users = require('./routes/users'),
+      article = require('./routes/article'),
+      api = require('./routes/api'),
 
       //Express Instance
       app = express();
@@ -28,6 +30,8 @@ app.use(cookieParser());
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/article', article);
+app.use('/api', api);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
