@@ -33,17 +33,17 @@ var getOneArticle = (req,res) => {
 
 var updateArticle = (req,res) => {
   Article.findById(req.params.id,(err,result) => {
-    if(err) {
+    if(err){
       res.send(err)
     }else {
       if(req.body.cekId == result.author) {
         Article.update(
-          {id: result._id},
-          {$set: req.body}, (err,result) => {
+          {_id: req.params.id},
+          {$set: req.body},(err,result) => {
             if(err) res.send(err)
-            res.send('data already updated')
+            res.send('data already update')
           })
-      } else {
+      }else {
         res.send('you not authorized')
       }
     }
@@ -51,9 +51,20 @@ var updateArticle = (req,res) => {
 }
 
 var deleteArticle = (req,res) => {
-  Article.findByIdAndRemove(req.params.id, (err) => {
-    if(err) res.send(err)
-    res.send('data already deleted')
+  Article.findById(req.params.id,(err,result) => {
+    if(err){
+      res.send(err)
+    }else {
+      if(req.body.cekId == result.author) {
+        Article.remove(
+          {_id: result._id},(err) => {
+            if(err) res.send(err)
+            res.send('data already update')
+          })
+      }else {
+        res.send('you not authorized')
+      }
+    }
   })
 }
 

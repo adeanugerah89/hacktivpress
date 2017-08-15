@@ -25,12 +25,17 @@ var getAllUser = (req,res) => {
 }
 
 var updateUser = (req,res) => {
-  User.update(
-    {id: req.params.id},
-    {$set: req.body},(err,result) => {
+  var hash = bcrypt.hashSync(req.body.password,salt)
+  User.findById(req.params.id,(err,result) => {
+    if(err) res.send(err)
+    result.username = req.body.username || result.username;
+    result.password = hash;
+    
+    result.save((err,result) => {
       if(err) res.send(err)
-      res.send('data already update')
+      res.send('data already updated')
     })
+  })
 }
 
 var deleteUser = (req,res) => {
